@@ -3,7 +3,7 @@
 Cosmos Pay is a standard protocol and set of reference implementations that enable developers or store owners to incorporate decentralized payments into their apps and services with Cosmos Pay module.
 
 ## Concept
-![https://cdn.discordapp.com/attachments/1110616153518264421/1160153561167052831/Untitled-2023-09-18-1026.png?ex=6533a033&is=65212b33&hm=13382ecaa0f207a7d6845fa0c51b5670512e850a8e2b0a432c98a0aeeece844d&]()
+https://cdn.discordapp.com/attachments/1110616153518264421/1160153561167052831/Untitled-2023-09-18-1026.png?ex=6533a033&is=65212b33&hm=13382ecaa0f207a7d6845fa0c51b5670512e850a8e2b0a432c98a0aeeece844d&
 
 
 
