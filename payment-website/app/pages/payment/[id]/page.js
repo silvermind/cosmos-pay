@@ -10,9 +10,9 @@ export default function Page() {
   const id = params.id;
 
   const [activeTab, setActiveTab] = useState('wallet');
-  const address = '0x0d67b2afc0c63c672fc5ae02b69377139187d6da39ea2f43eba5e80c20d9b923';
-  const usdPrice = 26;
-  const nativeTokenPrice = 34.2;
+  const address = 'neutron10g43cun9k2nev5uh3pawt843zj2z86zl3y555u';
+  const usdPrice = 12.02;
+  const nativeTokenPrice = 32.82;
   const transactionFee = 0.02;
 
 
