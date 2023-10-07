@@ -2,6 +2,12 @@
 
 Cosmos Pay is a standard protocol and set of reference implementations that enable developers or store owners to incorporate decentralized payments into their apps and services with Cosmos Pay module.
 
+## Concept
+![Uploading Untitled-2023-09-18-1026.png…]()
+
+
+
+
 ## Contract Reference
 
 - **`Create Order`** <br/>
