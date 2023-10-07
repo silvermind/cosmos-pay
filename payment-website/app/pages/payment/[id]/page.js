@@ -1,9 +1,11 @@
 "use client"
 import { useParams } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import WalletPayment from '../../Components/WalletPayment';
 import QrPayment from '../../Components/QrPayment';
-
+import { loadKeplrWallet } from '@/app/utils';
+import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate'
+import { GasPrice } from '@cosmjs/stargate';
 
 export default function Page() {
   const params = useParams();
@@ -15,6 +17,82 @@ export default function Page() {
   const nativeTokenPrice = 32.82;
   const transactionFee = 0.02;
 
+    // TODO: Change this later on
+    // This will be called by the backend with the admin key
+    // Only admin will be able to create the order
+    useEffect(() => {
+        const createOrder = async () => {
+            let signer = await loadKeplrWallet()
+            let walletAddress = (await signer.getAccounts())[0].address
+    
+            let client = await SigningCosmWasmClient.connectWithSigner(
+                "https://rpc-kralum.neutron-1.neutron.org",
+                signer,
+                {
+                  gasPrice: GasPrice.fromString("0.025untrn")
+                }
+            )
+        
+            await client.execute(
+                walletAddress,
+                "neutron1ndqt9wmlkjkgazudrfx6mptfsp3pzkmxv5f8a0vtqyy9y6xfhutsl5td3v",
+                {
+                    create_order: {
+                        order_id: "1234",
+                        price: "12020000"
+                    }
+                },
+                'auto'
+            )
+        }
+    }, [])
+
+    // TODO: Change this later on
+    // This will be called by the backend with the admin key
+    // Only admin will be able to create the order
+    useEffect(() => {
+        const checkPayment = async () => {
+            let signer = await loadKeplrWallet()
+            let walletAddress = (await signer.getAccounts())[0].address
+    
+            let client = await SigningCosmWasmClient.connectWithSigner(
+                "https://rpc-kralum.neutron-1.neutron.org",
+                signer,
+                {
+                  gasPrice: GasPrice.fromString("0.025untrn")
+                }
+            )
+        
+            let order = await client.queryContractSmart(
+                "neutron1ndqt9wmlkjkgazudrfx6mptfsp3pzkmxv5f8a0vtqyy9y6xfhutsl5td3v",
+                { order: { order_id: "1234" } },
+                'auto'
+            )
+
+            // There is an order with this order id
+            if (order) {
+                let valid_payment = await client.queryContractSmart(
+                    order.address,
+                    { check_payment: { } },
+                    'auto'
+                )
+
+                // The user sent the payment to contract
+                if (valid_payment) {
+                    await client.execute(
+                        walletAddress,
+                        "neutron1ndqt9wmlkjkgazudrfx6mptfsp3pzkmxv5f8a0vtqyy9y6xfhutsl5td3v",
+                        {
+                            confirm_payment: {
+                                order_id: "1234"
+                            }
+                        },
+                        'auto'
+                    )
+                }
+            }
+        }
+    }, [])
 
   return (
     <div className="max-w-screen-sm flex flex-wrap items-center justify-between mx-auto p-4 mt-16">
